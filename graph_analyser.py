@@ -8,6 +8,20 @@ import os
 import pyexcel
 
 st.set_page_config(layout="wide")
+
+# --- Custom Theme ---
+st.markdown(
+    "<style>"
+    "header {visibility: hidden;}"
+    ".reportview-container .main .block-container {padding-top: 2rem;}"
+    "</style>",
+    unsafe_allow_html=True
+)
+
+import os
+if os.path.exists("logo.png"):
+    st.image("logo.png", width=200)
+
 st.title("Structural Movement Graph Analyser")
 
 uploaded_file = st.file_uploader("Upload Excel (.xls or .xlsx)", type=["xls", "xlsx"])
@@ -135,3 +149,19 @@ if uploaded_file:
         pdf_path = export_pdf_report(df, time_col, value_col, temp_col, classification_result)
         with open(pdf_path, "rb") as pdf_file:
             st.download_button(label="Download Report", data=pdf_file, file_name="graph_report.pdf", mime="application/pdf")
+
+
+
+    # Optional: Send PDF via email (stub)
+    # import smtplib
+    # from email.message import EmailMessage
+    # msg = EmailMessage()
+    # msg['Subject'] = 'Your Structural Report'
+    # msg['From'] = 'you@example.com'
+    # msg['To'] = 'user@example.com'
+    # msg.set_content('Attached is your PDF report.')
+    # with open(pdf_path, 'rb') as f:
+    #     msg.add_attachment(f.read(), maintype='application', subtype='pdf', filename='graph_report.pdf')
+    # s = smtplib.SMTP('localhost')
+    # s.send_message(msg)
+    # s.quit()
